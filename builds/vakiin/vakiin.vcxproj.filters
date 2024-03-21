@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{039d55cd-2bac-4bda-b1b6-fa765704a758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{e40fffd3-3d3c-4e98-a8a2-d9e0848df74a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\vakiin">
+      <UniqueIdentifier>{f187e8a7-b4af-4ff8-8990-d633b9e4d890}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\vakiin\core.h">
+      <Filter>include\vakiin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\vakiin\particle.h">
+      <Filter>include\vakiin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\vakiin\precision.h">
+      <Filter>include\vakiin</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\particle.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

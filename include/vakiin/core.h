@@ -1,4 +1,4 @@
-#include "precision.h"
+#include "vakiin\precision.h"
 
 namespace vakiin{
     class vec3d{
@@ -44,7 +44,7 @@ namespace vakiin{
             }
 
             // Overload the * operator to multiply by scalars
-            void operator*=(const real value){
+            void operator*= (const real value){
                 x *= value;
                 y *= value;
                 z *= value;
