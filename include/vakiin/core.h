@@ -1,4 +1,4 @@
-#include "vakiin\precision.h"
+#include "precision.h"
 
 namespace vakiin{
     class vec3d{

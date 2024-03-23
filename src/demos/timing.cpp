@@ -55,19 +55,20 @@ unsigned TimingData::getTime(){
     }
 #endif
 
-#if TIMING_UNIX
-    struct timeval tv;
-    gettimeofday(&tv, 0);
+unsigned long TimingData::getClock(){
+    #if TIMING_UNIX
+        struct timeval tv;
+        gettimeofday(&tv, 0);
 
-    return (tv.tv_sec * 1000000) + tv.tv_usec;
+        return (tv.tv_sec * 1000000) + tv.tv_usec;
 
-#else
-    return systemClock();
+    #else
+        return systemClock();
 
-#endif
+    #endif
+}
 
 // Sets up the timing system and registers the performance counter
-
 void initTime(){
     #if TIMING_UNIX
         qpcFlag = false;
@@ -103,4 +104,49 @@ void TimingData::update(){
     // Update the timing information
     unsigned thisTime = systemTime();
     timingData->lastFrameDuration = thisTime - timingData->lastFrameTimestamp;
+    timingData->lastFrameTimestamp = thisTime;
+
+    // Update the tick information
+    unsigned long thisClock = getClock();
+    timingData->lastFrameClockTicks = thisClock - timingData->lastFrameClockstamp;
+    timingData->lastFrameClockstamp = thisClock;
+
+    // Update RWA timing information
+    if (timingData->frameNumber > 1){
+        if (timingData->averageFrameDuration <= 0){
+            timingData->averageFrameDuration = (double)timingData->lastFrameDuration;
+        }
+
+        else{
+            timingData->averageFrameDuration = timingData->averageFrameDuration * 0.99f 
+            + (double)timingData->lastFrameDuration * 0.01f;
+
+            timingData->fps = (float)(1000.0 / timingData->averageFrameDuration);
+        }
+    }
+}
+
+void TimingData::init(){
+    
+    initTime();
+
+    if (!timingData){
+        timingData = new TimingData();
+    }
+
+    timingData->frameNumber = 0;
+    timingData->lastFrameTimestamp = systemTime();
+    timingData->lastFrameClockstamp = getClock();
+    timingData->lastFrameDuration = 0;
+    timingData->lastFrameClockTicks = 0;
+    timingData->averageFrameDuration = 0;
+    timingData->fps = 0;
+    timingData->isPaused = false;
+}
+
+void TimingData::deinit(){
+    if (timingData){
+        delete timingData;
+        timingData = NULL;
+    }
 }

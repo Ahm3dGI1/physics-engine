@@ -1,4 +1,4 @@
-#include "vakiin\core.h"
+#include "core.h"
 
 namespace vakiin{
     class particle{
